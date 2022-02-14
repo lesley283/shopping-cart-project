@@ -1,5 +1,8 @@
 # shopping_cart.py
 
+from more_itertools import product_index
+
+
 products = [
     {
         "id": 1,
@@ -65,29 +68,23 @@ def to_usd(my_price):
 
 
 # TODO: write some Python code here to produce the desired output
-
-print(products)
+total_price = 0 # initialize counter variable
+selected_ids = []
 
 while True:
     # ASK FOR USER INPUT
-    product_id = input("Please input a product identifier: ")
-    print(product_id)
-
-    if product_id == "DONE":
+    selected_id = input("Please input a product identifier, or 'DONE' if there are no more items: ")
+    if selected_id == "DONE":
         break
+    else:
+        selected_ids.append(selected_id)
 
-    # LOOK UP CORRESPONDING PRODUCTS
 
-    # print product that has an id attribute equal to user input
-
-    matching_products = []
-
-    for x in products:
-        if str(x["id"]) == str(product_id):
-            matching_products.append(x)
-
-    print(matching_products)
-
-    # print the name of the matching product
+for selected_id in selected_ids:
+    matching_products = [p for p in products if str(p["id"] == str(selected_id))]
     matching_product = matching_products[0]
-    print(matching_product["name"], matching_product["price"])
+    total_price = total_price + matching_product["price"]
+    print("SELECTED PRODUCT: " + matching_product["name"] + " " + str(matching_product["price"]))
+
+print(selected_ids)
+print("Total Price: " + str(total_price))
