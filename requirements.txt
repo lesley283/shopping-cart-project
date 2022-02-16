@@ -1,0 +1,4 @@
+
+# .env file approach
+# makes enviornment variables easier to manage
+python-dotenv

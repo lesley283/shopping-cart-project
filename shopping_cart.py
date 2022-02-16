@@ -1,9 +1,4 @@
 # shopping_cart.py
-
-import datetime
-from more_itertools import product_index
-
-
 products = [
     {
         "id": 1,
@@ -116,8 +111,12 @@ print("---------------------------------")
 print("SUBTOTAL: ", to_usd(total_price))
 
 # determine tax rate and final total
-tax_rate = .0875
-tax_owed = total_price * tax_rate
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+tax_rate = os.getenv("TAX_RATE")
+tax_owed = total_price * float(tax_rate)
 print("TAX:", to_usd(tax_owed))
 print("TOTAL:", to_usd(total_price + tax_owed))
 
