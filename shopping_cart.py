@@ -96,7 +96,8 @@ print("WWW.LESLEYSGROCERY.COM")
 print("---------------------------------")
 
 # print current date and time
-print("CHECKOUT AT:", datetime.datetime.now())  # NEED TO REFORMAT TIME
+import datetime
+print("CHECKOUT AT:", datetime.date.today(), datetime.datetime.now().strftime("%I:%M %p"))
 print("---------------------------------")
 
 # FIND MATCHING PRODUCTS AND PRICES; RUNNING SUM OF TOTAL
