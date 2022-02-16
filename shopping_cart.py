@@ -1,5 +1,6 @@
 # shopping_cart.py
 
+import datetime
 from more_itertools import product_index
 
 
@@ -88,7 +89,18 @@ while True:
     else:
         selected_ids.append(selected_id)
 
+# RECEIPT OUTPUT HEADER
+print("---------------------------------")
+print("LESLEY'S LOCAL GROCERY")
+print("WWW.LESLEYSGROCERY.COM")
+print("---------------------------------")
+
+# print current date and time
+print("CHECKOUT AT:", datetime.datetime.now())  # NEED TO REFORMAT TIME
+print("---------------------------------")
+
 # FIND MATCHING PRODUCTS AND PRICES; RUNNING SUM OF TOTAL
+print("SELECTED PRODUCTS:")
 for selected_id in selected_ids:
     matching_products = []
     for p in products:
@@ -96,6 +108,19 @@ for selected_id in selected_ids:
             matching_products.append(p)
     matching_product = matching_products[-1]
     total_price = total_price + matching_product["price"]
-    print("SELECTED PRODUCT: " + matching_product["name"] + " " + str(matching_product["price"]))
+    print("... " + matching_product["name"] + " (" + str(to_usd(matching_product["price"])) + ")")
 
-print("Total Price: " + str(total_price))
+# PRINT TOTALS
+print("---------------------------------")
+print("SUBTOTAL: ", to_usd(total_price))
+
+# determine tax rate and final total
+tax_rate = .0875
+tax_owed = total_price * tax_rate
+print("TAX:", to_usd(tax_owed))
+print("TOTAL:", to_usd(total_price + tax_owed))
+
+# farewell message
+print("---------------------------------")
+print("THANKS, SEE YOU AGAIN SOON!")
+print("---------------------------------")
