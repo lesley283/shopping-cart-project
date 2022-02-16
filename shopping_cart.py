@@ -67,24 +67,35 @@ def to_usd(my_price):
     return f"${my_price:,.2f}"  # > $12,000.71
 
 
-# TODO: write some Python code here to produce the desired output
-total_price = 0 # initialize counter variable
-selected_ids = []
+######################
+# start of main code #
+######################
 
+# VARIABLE DECLARATIONS
+total_price = 0 # initialize counter variable
+selected_ids = [] # store user inputted IDs into a list
+product_ids = []  # used for data validation; store all product ids into a list
+for item in products:
+    product_ids.append(item["id"])
+
+# ASK FOR USER INPUT AND STORE INTO LIST IF VALID
 while True:
-    # ASK FOR USER INPUT
     selected_id = input("Please input a product identifier, or 'DONE' if there are no more items: ")
     if selected_id == "DONE":
         break
+    elif str(selected_id) not in str(product_ids):
+        print("Error, you have entered an invalid ID. Please try again.")
     else:
         selected_ids.append(selected_id)
 
-
+# FIND MATCHING PRODUCTS AND PRICES; RUNNING SUM OF TOTAL
 for selected_id in selected_ids:
-    matching_products = [p for p in products if str(p["id"] == str(selected_id))]
-    matching_product = matching_products[0]
+    matching_products = []
+    for p in products:
+        if str(p["id"]) == str(selected_id):
+            matching_products.append(p)
+    matching_product = matching_products[-1]
     total_price = total_price + matching_product["price"]
     print("SELECTED PRODUCT: " + matching_product["name"] + " " + str(matching_product["price"]))
 
-print(selected_ids)
 print("Total Price: " + str(total_price))
