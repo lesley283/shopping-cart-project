@@ -115,7 +115,7 @@ import os
 from dotenv import load_dotenv
 
 load_dotenv()
-tax_rate = os.getenv("TAX_RATE")
+tax_rate = os.getenv("TAX_RATE", default='.0875')
 tax_owed = total_price * float(tax_rate)
 print("TAX:", to_usd(tax_owed))
 print("TOTAL:", to_usd(total_price + tax_owed))
