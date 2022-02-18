@@ -1,6 +1,4 @@
 # shopping_cart.py
-from sendgrid.helpers.mail import Mail
-from sendgrid import SendGridAPIClient
 products = [
     {
         "id": 1,
@@ -101,8 +99,8 @@ print("---------------------------------")
 
 # FIND MATCHING PRODUCTS AND PRICES; RUNNING SUM OF TOTAL
 print("SELECTED PRODUCTS:")
+matching_products = []
 for selected_id in selected_ids:
-    matching_products = []
     for p in products:
         if str(p["id"]) == str(selected_id):
             matching_products.append(p)
@@ -149,10 +147,17 @@ if email_receipt == "yes":
     SENDER_ADDRESS = os.getenv("SENDER_ADDRESS", default="Oops! Please set env var called 'SENDER_ADDRESS'")
 
     # this must match the test data structure
+    # create new list of bought products to fit test data
+
+    for x in matching_products:
+        x.pop("department")
+        x.pop("aisle")
+        x.pop("price")
+
     template_data = {
         "total_price_usd": str(to_usd(final_total)),
         "human_friendly_timestamp": str(date_day) + " " + str(date_time),
-        "products": []
+        "products": matching_products
      }
 
     client = SendGridAPIClient(SENDGRID_API_KEY)
