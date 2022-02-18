@@ -79,7 +79,7 @@ while True:
     selected_id = input("Please input a product identifier, or 'DONE' if there are no more items: ")
     if selected_id == "DONE":
         break
-    elif str(selected_id) not in str(product_ids):
+    elif str(selected_id) not in str(product_ids) or str(selected_id) == "0" or str(selected_id) == "":
         print("Error, you have entered an invalid ID. Please try again.")
     else:
         selected_ids.append(selected_id)
