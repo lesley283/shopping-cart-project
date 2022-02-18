@@ -1,4 +1,6 @@
 # shopping_cart.py
+from sendgrid.helpers.mail import Mail
+from sendgrid import SendGridAPIClient
 products = [
     {
         "id": 1,
@@ -92,7 +94,9 @@ print("---------------------------------")
 
 # print current date and time
 import datetime
-print("CHECKOUT AT:", datetime.date.today(), datetime.datetime.now().strftime("%I:%M %p"))
+date_day = datetime.date.today()
+date_time = datetime.datetime.now().strftime("%I:%M %p")
+print("CHECKOUT AT:", date_day, date_time)
 print("---------------------------------")
 
 # FIND MATCHING PRODUCTS AND PRICES; RUNNING SUM OF TOTAL
@@ -115,10 +119,61 @@ import os
 from dotenv import load_dotenv
 
 load_dotenv()
-tax_rate = os.getenv("TAX_RATE", default='.0875')
-tax_owed = total_price * float(tax_rate)
+TAX_RATE = os.getenv("TAX_RATE", default='.0875')
+tax_owed = total_price * float(TAX_RATE)
 print("TAX:", to_usd(tax_owed))
-print("TOTAL:", to_usd(total_price + tax_owed))
+final_total = total_price + tax_owed
+print("TOTAL:", to_usd(final_total))
+
+# SEND EMAIL RECEIPT
+# ask whether user wants or not
+while True:
+    email_receipt = input(
+        "Would you like to receive a copy of your receipt by email? Type 'yes' or 'no': ")
+    email_receipt = email_receipt.lower()
+    if email_receipt == "yes":
+        break
+    elif email_receipt == "no":
+        break
+    else:
+        print("Error: you have entered an invalid input. Please type 'yes' or 'no': ")
+
+if email_receipt == "yes":
+    email_address = input("Please input your email address (i.e. 'lyl13@georgetown.edu'): ")
+
+    from sendgrid import SendGridAPIClient
+    from sendgrid.helpers.mail import Mail
+
+    SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY", default="Oops! Please set env var called 'SENDGRID_API_KEY'")
+    SENDGRID_TEMPLATE_ID = os.getenv("SENDGRID_TEMPLATE_ID", default="Oops! Please set env var called 'SENDGRID_TEMPLATE_ID'")
+    SENDER_ADDRESS = os.getenv("SENDER_ADDRESS", default="Oops! Please set env var called 'SENDER_ADDRESS'")
+
+    # this must match the test data structure
+    template_data = {
+        "total_price_usd": str(to_usd(final_total)),
+        "human_friendly_timestamp": str(date_day) + " " + str(date_time),
+        "products": []
+     }
+
+    client = SendGridAPIClient(SENDGRID_API_KEY)
+    print("CLIENT:", type(client))
+
+    message = Mail(from_email=SENDER_ADDRESS, to_emails=email_address)
+    message.template_id = SENDGRID_TEMPLATE_ID
+    message.dynamic_template_data = template_data
+    print("MESSAGE:", type(message))
+
+    try:
+        response = client.send(message)
+        print("RESPONSE:", type(response))
+        print(response.status_code)
+        print(response.body)
+        print(response.headers)
+    except Exception as err:
+        print(type(err))
+        print(err)
+
+    print("Receipt has been sent!")
 
 # farewell message
 print("---------------------------------")

@@ -2,3 +2,7 @@
 # .env file approach
 # makes enviornment variables easier to manage
 python-dotenv
+
+
+# provides useful emailing capabilities
+sendgrid==6.6.0

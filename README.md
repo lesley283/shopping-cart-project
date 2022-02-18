@@ -14,11 +14,20 @@ Activate the virtual environment:
 conda activate shopping-env
 ```
 
-Install package dependencies (mainly for testing):
+Install package dependencies:
 
 ```sh
 pip install -r requirements.txt
 ```
+
+Set the tax rate by creating a .env file
+```sh
+# this is the ".env" file...
+
+ TAX_RATE=0.0875
+```
+
+
 
 
 ## Usage
