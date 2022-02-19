@@ -29,7 +29,7 @@ Set the tax rate by creating a .env file and a .gitignore file
  TAX_RATE=0.0875
 ```
 ```sh
-# this is the "my-secure-project/.gitignore" file...
+# this is the ".gitignore" file...
 
 # ignore the contents of the ".env" file (prevent them from being exposed on GitHub):
 .env
