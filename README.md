@@ -14,7 +14,7 @@ Activate the virtual environment:
 conda activate shopping-env
 ```
 
-Install package dependencies (dotenv and sendgrid)
+Install package dependencies (dotenv and sendgrid):
 
 ```sh
 pip install -r requirements.txt
@@ -22,7 +22,7 @@ pip install -r requirements.txt
 
 ## Bonus Challenges Setup
 
-Set the tax rate by creating a .env file and a .gitignore file
+Set the tax rate by creating a .env file and a .gitignore file:
 ```sh
 # this is the ".env" file...
 
@@ -35,7 +35,7 @@ Set the tax rate by creating a .env file and a .gitignore file
 .env
 ```
 
-Send an email receipt
+Send an email receipt:
 1. Create a "Single Sender Verification" on SendGrid:
    https://signup.sendgrid.com/
 2. Create a SendGrid API Key with "full access" permissions:
