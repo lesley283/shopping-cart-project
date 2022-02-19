@@ -22,11 +22,17 @@ pip install -r requirements.txt
 
 ## Bonus Challenges Setup
 
-Set the tax rate by creating a .env file
+Set the tax rate by creating a .env file and a .gitignore file
 ```sh
 # this is the ".env" file...
 
  TAX_RATE=0.0875
+```
+```sh
+# this is the "my-secure-project/.gitignore" file...
+
+# ignore the contents of the ".env" file (prevent them from being exposed on GitHub):
+.env
 ```
 
 Send an email receipt
