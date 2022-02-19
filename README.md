@@ -30,9 +30,9 @@ Set the tax rate by creating a .env file
 ```
 
 Send an email receipt
-1. Create a "Single Sender Verification" on SendGrid
+1. Create a "Single Sender Verification" on SendGrid:
    https://signup.sendgrid.com/
-2. Create a SendGrid API Key with "full access" permissions
+2. Create a SendGrid API Key with "full access" permissions:
     https://app.sendgrid.com/login?redirect_to=%2Fsettings%2Fapi_keys
 3. Store the API Key in an environment variable in a .env file
     ```sh
@@ -40,9 +40,10 @@ Send an email receipt
     SENDGRID_API_KEY="SampleAPIKeyfromSendGrid"
     SENDER_ADDRESS="SenderEmailAddress"
     ```
-4. Create an email template by going to the SendGrid website and store the template identifier into an environment variable in your .env file
+4. Create an email template by going to the SendGrid website and store the template identifier into an environment variable in your .env file:
     https://sendgrid.com/dynamic_templates
     ```sh
+    # this is the ".env" file...
     SENDGRID_TEMPLATE_ID="SampleTemplateUniqueIdentifier"
     ```
 5. Paste the following HTML into the "Code" tab of the template
