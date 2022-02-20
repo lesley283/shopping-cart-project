@@ -39,7 +39,7 @@ Send an email receipt:
 1. Create a "Single Sender Verification" on SendGrid:
    https://signup.sendgrid.com/
 2. Create a SendGrid API Key with "full access" permissions:
-    https://app.sendgrid.com/login?redirect_to=%2Fsettings%2Fapi_keys
+    https://app.sendgrid.com/api_keys
 3. Store the API Key in an environment variable in a .env file
     ```sh
     # this is the ".env" file...

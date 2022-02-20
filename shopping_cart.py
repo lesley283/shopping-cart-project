@@ -99,11 +99,12 @@ print("---------------------------------")
 
 # FIND MATCHING PRODUCTS AND PRICES; RUNNING SUM OF TOTAL
 print("SELECTED PRODUCTS:")
+
 matching_products = []
 for selected_id in selected_ids:
     for p in products:
-        if str(p["id"]) == str(selected_id):
-            matching_products.append(p)
+       if str(p["id"]) == str(selected_id):
+          matching_products.append(p)
     matching_product = matching_products[-1]
     total_price = total_price + matching_product["price"]
     print("... " + matching_product["name"] + " (" + str(to_usd(matching_product["price"])) + ")")
