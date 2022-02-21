@@ -180,25 +180,19 @@ if email_receipt == "yes":
         "products": matching_products
      }
 
+    # print email receipt status
     client = SendGridAPIClient(SENDGRID_API_KEY)
-    print("CLIENT:", type(client))
-
     message = Mail(from_email=SENDER_ADDRESS, to_emails=email_address)
     message.template_id = SENDGRID_TEMPLATE_ID
     message.dynamic_template_data = template_data
-    print("MESSAGE:", type(message))
+    response = client.send(message)
 
-    try:
-        response = client.send(message)
-        print("RESPONSE:", type(response))
-        print(response.status_code)
-        print(response.body)
-        print(response.headers)
-    except Exception as err:
-        print(type(err))
-        print(err)
-
-    print("Receipt has been sent!")
+    print("---------------------------------")
+    if response.status_code == 202:
+        print("STATUS CODE:", response.status_code)
+        print("Receipt has been sent!")
+    else:
+        print("Oops, something went wrong. Sorry!")
 
 # PRINT FAREWELL MESSAGE
 print("---------------------------------")
