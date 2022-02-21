@@ -46,13 +46,13 @@ Send an email receipt:
    https://signup.sendgrid.com/
 2. Create a SendGrid API Key with "full access" permissions:
     https://app.sendgrid.com/api_keys
-3. Store the API Key in an environment variable in a .env file
+3. Store the API Key and Sender Address in an environment variable in a .env file
     ```sh
     # this is the ".env" file...
     SENDGRID_API_KEY="SampleAPIKeyfromSendGrid"
     SENDER_ADDRESS="SingleSenderVerificationAddressfromPart1"
     ```
-4. Create an email template by going to the SendGrid website and store the template identifier into an environment variable in your .env file:
+4. Create an email template by going to the SendGrid website. Store the template identifier into an environment variable in your .env file:
     https://sendgrid.com/dynamic_templates
     ```sh
     # this is the ".env" file...
