@@ -84,6 +84,7 @@ Send an email receipt:
     ```
 ## Usage
 
+Run the shopping cart program:
 ```sh
 python shopping_cart.py
 ```

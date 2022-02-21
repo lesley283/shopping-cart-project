@@ -1,4 +1,8 @@
 # shopping_cart.py
+
+######################
+#     data setup     #
+######################
 products = [
     {
         "id": 1,
@@ -79,7 +83,7 @@ while True:
     selected_id = input("Please input a product identifier, or 'DONE' if there are no more items: ")
     if selected_id == "DONE":
         break
-    elif str(selected_id) not in str(product_ids) or str(selected_id) == "0" or str(selected_id) == "":
+    elif str(selected_id) not in str(product_ids) or str(selected_id) == "0" or str(selected_id) == "": # handles invalid user inputs
         print("Error, you have entered an invalid ID. Please try again.")
     else:
         selected_ids.append(selected_id)
@@ -90,14 +94,14 @@ print("LESLEY'S LOCAL GROCERY")
 print("WWW.LESLEYSGROCERY.COM")
 print("---------------------------------")
 
-# print current date and time
+# PRINT DATE AND TIME
 import datetime
 date_day = datetime.date.today()
 date_time = datetime.datetime.now().strftime("%I:%M %p")
 print("CHECKOUT AT:", date_day, date_time)
 print("---------------------------------")
 
-# FIND MATCHING PRODUCTS AND PRICES; RUNNING SUM OF TOTAL
+# FIND MATCHING PRODUCTS AND PRICES; CALCULATE RUNNING SUM OF TOTAL
 print("SELECTED PRODUCTS:")
 
 matching_products = []
@@ -109,26 +113,26 @@ for selected_id in selected_ids:
     total_price = total_price + matching_product["price"]
     print("... " + matching_product["name"] + " (" + str(to_usd(matching_product["price"])) + ")")
 
-# PRINT TOTALS
+# PRINT TAX AND TOTALS
 print("---------------------------------")
 print("SUBTOTAL: ", to_usd(total_price))
 
-# determine tax rate and final total
+# determine tax rate using .env file approach
 import os
 from dotenv import load_dotenv
-
 load_dotenv()
 TAX_RATE = os.getenv("TAX_RATE", default='.0875')
 tax_owed = total_price * float(TAX_RATE)
 print("TAX:", to_usd(tax_owed))
+
+# print final total
 final_total = total_price + tax_owed
 print("TOTAL:", to_usd(final_total))
 
 # SEND EMAIL RECEIPT
-# ask whether user wants or not
+# ask whether user wants to or not
 while True:
-    email_receipt = input(
-        "Would you like to receive a copy of your receipt by email? Type 'yes' or 'no': ")
+    email_receipt = input("Would you like to receive a copy of your receipt by email? Type 'yes' or 'no': ")
     email_receipt = email_receipt.lower()
     if email_receipt == "yes":
         break
@@ -137,24 +141,39 @@ while True:
     else:
         print("Error: you have entered an invalid input. Please type 'yes' or 'no': ")
 
+# if the user wants an email receipt
+# ask for email address
 if email_receipt == "yes":
     email_address = input("Please input your email address (i.e. 'lyl13@georgetown.edu'): ")
 
+    # import sendgrid module
     from sendgrid import SendGridAPIClient
     from sendgrid.helpers.mail import Mail
 
+    # set API key, template, and sender address using .env file approach
     SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY", default="Oops! Please set env var called 'SENDGRID_API_KEY'")
     SENDGRID_TEMPLATE_ID = os.getenv("SENDGRID_TEMPLATE_ID", default="Oops! Please set env var called 'SENDGRID_TEMPLATE_ID'")
     SENDER_ADDRESS = os.getenv("SENDER_ADDRESS", default="Oops! Please set env var called 'SENDER_ADDRESS'")
 
-    # this must match the test data structure
-    # create new list of bought products to fit test data
-
+    # product data must match the test data structure
+    # edit matching products list to fit test data
+    # first, need to remove duplicates from list (if found)
+    # code developed from https://stackoverflow.com/questions/9427163/remove-duplicate-dict-in-list-in-python
+    unique_products = set()
+    new_products = []
     for x in matching_products:
-        x.pop("department")
-        x.pop("aisle")
-        x.pop("price")
+        t = tuple(sorted(x.items()))
+        if t not in unique_products:
+            unique_products.add(t)
+            new_products.append(x)
 
+    # next, remove price, aisle, and department key-value pairs
+    for item in new_products:
+        del item["price"]
+        del item["aisle"]
+        del item["department"]
+
+    # code developed from https://github.com/prof-rossetti/intro-to-python/blob/main/notes/python/packages/sendgrid.md
     template_data = {
         "total_price_usd": str(to_usd(final_total)),
         "human_friendly_timestamp": str(date_day) + " " + str(date_time),
@@ -181,7 +200,7 @@ if email_receipt == "yes":
 
     print("Receipt has been sent!")
 
-# farewell message
+# PRINT FAREWELL MESSAGE
 print("---------------------------------")
 print("THANKS, SEE YOU AGAIN SOON!")
 print("---------------------------------")
