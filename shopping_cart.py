@@ -74,7 +74,7 @@ def to_usd(my_price):
 # VARIABLE DECLARATIONS
 total_price = 0 # initialize counter variable
 selected_ids = [] # store user inputted IDs into a list
-product_ids = []  # used for data validation; store all product ids into a list
+product_ids = []  # used for data validation; store all product ids into its own list
 for item in products:
     product_ids.append(item["id"])
 
@@ -103,7 +103,6 @@ print("---------------------------------")
 
 # FIND MATCHING PRODUCTS AND PRICES; CALCULATE RUNNING SUM OF TOTAL
 print("SELECTED PRODUCTS:")
-
 matching_products = []
 for selected_id in selected_ids:
     for p in products:
@@ -141,7 +140,7 @@ while True:
     else:
         print("Error: you have entered an invalid input. Please type 'yes' or 'no': ")
 
-# if the user wants an email receipt
+# if the user wants an email receipt...
 # ask for email address
 if email_receipt == "yes":
     email_address = input("Please input your email address (i.e. 'lyl13@georgetown.edu'): ")
@@ -192,7 +191,7 @@ if email_receipt == "yes":
         print("STATUS CODE:", response.status_code)
         print("Receipt has been sent!")
     else:
-        print("Oops, something went wrong. We are unable to email a receipt.")
+        print("Oops, something went wrong. We are unable to email you a copy of your receipt.")
         exit()
 
 # PRINT FAREWELL MESSAGE
