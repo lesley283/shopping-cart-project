@@ -115,7 +115,7 @@ for selected_id in selected_ids:
 
 # PRINT TAX AND TOTALS
 print("---------------------------------")
-print("SUBTOTAL: ", to_usd(total_price))
+print("SUBTOTAL:", to_usd(total_price))
 
 # determine tax rate using .env file approach
 import os
@@ -192,7 +192,8 @@ if email_receipt == "yes":
         print("STATUS CODE:", response.status_code)
         print("Receipt has been sent!")
     else:
-        print("Oops, something went wrong. Sorry!")
+        print("Oops, something went wrong. We are unable to email a receipt.")
+        exit()
 
 # PRINT FAREWELL MESSAGE
 print("---------------------------------")

@@ -2,6 +2,12 @@
 
 ## Setup
 
+"Clone" or download the remote repository onto your local computer. Then navigate to wherever you downloaded the repo:
+
+```sh
+cd ~/Desktop/shopping-cart-project
+```
+
 Create a virtual environment:
 
 ```sh
@@ -14,7 +20,7 @@ Activate the virtual environment:
 conda activate shopping-env
 ```
 
-Install package dependencies (dotenv and sendgrid):
+Install package dependencies (dotenv and sendgrid) within the virtual environment:
 
 ```sh
 pip install -r requirements.txt
@@ -44,7 +50,7 @@ Send an email receipt:
     ```sh
     # this is the ".env" file...
     SENDGRID_API_KEY="SampleAPIKeyfromSendGrid"
-    SENDER_ADDRESS="SenderEmailAddress"
+    SENDER_ADDRESS="SingleSenderVerificationAddressfromPart1"
     ```
 4. Create an email template by going to the SendGrid website and store the template identifier into an environment variable in your .env file:
     https://sendgrid.com/dynamic_templates
